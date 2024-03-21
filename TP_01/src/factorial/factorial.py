@@ -28,11 +28,18 @@ def calculate_range(num_range):
 
 	if num_from > num_to:
 		print("El primer número es mayor al segundo.")
-		sys.exit()
+		return
 
 	for num in range(num_from, num_to + 1):
 		print("Factorial ", num, "! es ", factorial(int(num)))
 
 if len(sys.argv) < 2:
-	num_range = input("Ingrese un rango (ej. 4-8): ")
-	calculate_range(num_range)
+	num = input("Ingrese un rango (ej. 4-8) o un número: ")
+else:
+	num = sys.argv[1]
+
+if '-' in num:
+	calculate_range(num)
+	sys.exit()
+
+print("Factorial ", num, "! es ", factorial(int(num)))
