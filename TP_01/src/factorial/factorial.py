@@ -7,6 +7,7 @@
 #*-------------------------------------------------------------------------*
 import sys
 
+# calculates the factorial of a number
 def factorial(num):
 	if num < 0:
 		print("Factorial de un número negativo no existe")
@@ -20,6 +21,9 @@ def factorial(num):
 		num -= 1
 	return fact
 
+# calculates the factorial between two numbers
+# if 'from' is not sent, it's 1 by default
+# if 'to' is not sent, it's 60 by default
 def calculate_range(num_range):
 	num_list = num_range.split('-')
 
@@ -33,6 +37,7 @@ def calculate_range(num_range):
 	for num in range(num_from, num_to + 1):
 		print("Factorial ", num, "! es ", factorial(int(num)))
 
+# checks if the arguments were sent with the command
 if len(sys.argv) < 2:
 	num = input("Ingrese un rango (ej. 4-8) o un número: ")
 else:
