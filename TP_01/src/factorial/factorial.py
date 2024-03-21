@@ -23,8 +23,8 @@ def factorial(num):
 def calculate_range(num_range):
 	num_list = num_range.split('-')
 
-	num_from = int(num_list[0])
-	num_to = int(num_list[1])
+	num_from = 1 if num_list[0] == '' else int(num_list[0])
+	num_to = 60 if num_list[1] == '' else int(num_list[1])
 
 	if num_from > num_to:
 		print("El primer número es mayor al segundo.")
