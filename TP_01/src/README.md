@@ -1,5 +1,21 @@
 # Trabajo Práctico 01
 
+Más información en el [campus](https://campus.fcytcdelu.uader.edu.ar/course/view.php?id=95).
+
+## Subtítulo
+
+### Lista ordenada
+
+1. primer item
+2. segundo item
+3. tercer item
+
+### Lista desordenada
+
+- item
+- item
+- item
+
 ### Simulando el borrado "accidental"
 
 ![image](https://github.com/wokcito/UADER_IS2_Kazanski_Maximiliano/assets/99556533/09fea79d-a9ac-4458-92b4-b53ada8f38fb)
