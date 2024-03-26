@@ -2,6 +2,9 @@
 
 Más información en el [campus](https://campus.fcytcdelu.uader.edu.ar/course/view.php?id=95).
 
+- [Lista ordenada](#lista-ordenada)
+- [Lista desordenada](#lista-desordenada)
+
 ## Subtítulo
 
 ### Lista ordenada
