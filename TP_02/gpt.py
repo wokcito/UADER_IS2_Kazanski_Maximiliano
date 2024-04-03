@@ -1,5 +1,5 @@
 """
-Module that generates a conversation between a user and ChatGPT
+Module that generates a conversation between a user and ChatGPT.
 """
 
 import sys
@@ -8,7 +8,10 @@ from openai import OpenAI
 
 class Conversation():
     """
-    Conversation class
+    Conversation class that has the necessary methods to use the OpenAI's API and manage the history of messages
+
+    Args:
+        mode (str, optional): if it is "CONVERSATION" the class will use all history of messages to make the requests.
     """
     def __init__(self, mode = None):
         self.mode = mode
@@ -19,7 +22,13 @@ class Conversation():
 
     def get_user_message(self):
         """
-        Asks the user for the message and prints it with "You: " before it
+        Asks the user for the message and prints it with "You: " before it.
+
+        Returns:
+            str: the user message.
+
+        Raises:
+            ValueError: if the message is empty
         """
         try:
             user_message = input("Ingrese su consulta: ")
@@ -35,7 +44,13 @@ class Conversation():
 
     def get_chatgpt_message(self, user_message):
         """
-        Generate a response for the user message with OpenAI's API
+        Generate a response for the user message with OpenAI's API.
+
+        Args:
+            user_message (str): user message to be used in the request.
+
+        Returns:
+            str: message from the response.
         """
         try:
             response = self.client.chat.completions.create(
@@ -67,7 +82,10 @@ class Conversation():
 
     def get_message_history(self):
         """
-        Returns the message history
+        Obtains and returns the message history.
+
+        Returns:
+            list: history of messages.
         """
         return self.message_history
 
@@ -79,7 +97,7 @@ conversation = Conversation(MODE)
 
 def main():
     """
-    Executes the necessary methods to make the program work
+    Executes the necessary methods to make the program work.
     """
     user_message = conversation.get_user_message()
     conversation.get_chatgpt_message(user_message)
