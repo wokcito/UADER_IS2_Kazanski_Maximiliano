@@ -1,0 +1,4 @@
+Comunmente este patrón se utiliza para la buena gestión de la memoria por ejemplo,
+entonces se me ocurre que se debe usar seguido en videojuegos donde haya muchas entidades
+que compartan propiedades, entonces el patrón flyweight se encargaría de crear una vez una
+instancia y luego devolverla cada vez que se necesite
