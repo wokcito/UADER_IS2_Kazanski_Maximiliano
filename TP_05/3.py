@@ -15,20 +15,29 @@ class Subject():
 			observer.update(self)
 
 	def do_something(self):
-		list_of_ids = [1,2,3,4,5,6,7,8]
+		list_of_ids = [
+			"ASDF",
+			"A123",
+			"12FD",
+			"C123",
+			"D123",
+			"GHJK",
+			"POIU",
+			"B123"
+		]
 		
 		for id in list_of_ids:
 			self._state = id
 			self.notify()
 
-def is_same_id(id, some_number):
-	if id == some_number:
+def is_same_id(id, some_id):
+	if id == some_id:
 		return True
 	else:
 		return False
 
 class ObserverA():
-	_id: int = 1
+	_id: int = "A123"
 	
 	def update(self, subject: Subject):
 		emited_id = subject._state
@@ -37,7 +46,7 @@ class ObserverA():
 			print(f"ObserverA: {emited_id} is my id")
 
 class ObserverB():
-	_id: int = 8
+	_id: int = "B123"
 	
 	def update(self, subject: Subject):
 		emited_id = subject._state
@@ -46,7 +55,7 @@ class ObserverB():
 			print(f"ObserverB: {emited_id} is my id")
 
 class ObserverC():
-	_id: int = 6
+	_id: int = "C123"
 	
 	def update(self, subject: Subject):
 		emited_id = subject._state
@@ -55,7 +64,7 @@ class ObserverC():
 			print(f"ObserverC: {emited_id} is my id")
 
 class ObserverD():
-	_id: int = 4
+	_id: int = "D123"
 	
 	def update(self, subject: Subject):
 		emited_id = subject._state
