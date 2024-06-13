@@ -6,7 +6,7 @@ import sys
 import json
 
 VERSION_COMMANDS = ["-v", "--version"]
-VERSION = '1.1'
+VERSION = '1.2'
 HELP_COMANDS = ["-h", "--help"]
 HELP_MESSAGE = """
 Este programa permite extraer la clave de acceso API para utilizar los servicios del 
@@ -91,11 +91,57 @@ class GetJason(metaclass=SingletonMeta):
         """
         return VERSION
 
+class PaymentHandler:
+    """
+    Clase para manejar los pagos utilizando el patrón chain of responsability
+    """
+    def __init__(self, token, balance):
+        self.token = token
+        self.balance = balance
+        self.next_handler = None
+
+    def set_next(self, handler):
+        self.next_handler = handler
+
+    def process_payment(self, order_number, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+            print(f"Pedido {order_number} pagado usando {self.token} por un monto de {amount}.")
+            return {
+                "order_number": order_number,
+                "token": self.token,
+                "amount": amount
+            }
+        elif self.next_handler:
+            return self.next_handler.process_payment(order_number, amount)
+        else:
+            print(f"Pedido {order_number} no se pudo procesar por falta de saldo.")
+            return None        
+
+class PaymentIterator:
+    """
+    Clase iteradora para la lista de pagos
+    """
+    def __init__(self, payments):
+        self._payments = payments
+        self._index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self._index < len(self._payments):
+            result = self._payments[self._index]
+            self._index += 1
+            return result
+        else:
+            raise StopIteration
+
 if __name__ == "__main__":
     args = sys.argv
 
     try:
-        if len(args) < 3:
+        if len(args) < 2:
             raise Exception("Considere utilizar el comando -h o --help para ver el mensaje de ayuda")
 
         getJason = GetJason()
@@ -109,8 +155,44 @@ if __name__ == "__main__":
                 print(getJason.get_help_message())
                 sys.exit()
 
-        _, file, key = args
-        print(getJason.get_token(file, key))
+        _, file = args
+
+
+        # Crear los manejadores de pago
+        token1_handler = PaymentHandler("token1", 1000)
+        token2_handler = PaymentHandler("token2", 2000)
+
+        # Configurar la cadena de responsabilidad
+        token1_handler.set_next(token2_handler)
+
+        # Lista para almacenar los pagos realizados
+        payments = []
+
+        def make_payment(order_number, amount):
+            """
+            Realiza un pago
+            """
+            result = token1_handler.process_payment(order_number, amount)
+            if result:
+                payments.append(result)
+
+        def list_payments():
+            """
+            Lista todos los pagos realizados utilizando un iterador
+            """
+            payment_iterator = PaymentIterator(payments)
+            for payment in payment_iterator:
+                print(payment)
+
+        # Realizar pedidos de pago como ejemplos
+        make_payment(1, 500)
+        make_payment(2, 500)
+        make_payment(3, 500)
+        make_payment(4, 500)
+        make_payment(5, 500)
+
+        # Listar pagos realizados
+        list_payments()
 
     except Exception as err:
         print(err)
